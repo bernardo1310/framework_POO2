@@ -2,11 +2,11 @@
 
 ## Sobre o projeto
 
-Esse projeto surgiu da minha vontade de entender melhor como funciona a modelagem e a criação de um banco de dados relacional, mas de uma forma mais programática, usando Java. 
-A ideia era construir algo que me permitisse **definir tabelas, campos e relacionamentos no código**, e depois gerar automaticamente os scripts SQL prontos para criar tudo no banco real.
-Eu quis automatizar o processo que normalmente seria feito escrevendo SQL "na mão", e com isso também pratiquei conceitos importantes de orientação a objetos, como encapsulamento, composição e uso de interfaces.
+Esse é um projeto da disciplina de POO 2, trabalho sobre Frameworks. A ideia era construir algo que me permitisse **definir tabelas, campos e relacionamentos no código**, 
+e depois gerar automaticamente os scripts SQL prontos para criar tudo no banco real.
+Eu quis automatizar o processo que normalmente seria feito escrevendo SQL "na mão", pensando em conceitos importantes de orientação a objetos, como encapsulamento, composição e uso de interfaces.
 
-## Como desenvolvi
+## CO planejamento
 
 Comecei pensando nos principais elementos de um banco de dados:
 
@@ -15,16 +15,16 @@ Comecei pensando nos principais elementos de um banco de dados:
 - Os campos (colunas)
 - As chaves primárias e estrangeiras
 
-Com isso, criei as seguintes classes:
+Com isso, criei as seguintes classes no PlantUML:
 
 ### 1. BancoDados
 
 Foi a primeira classe que fiz. Representa o banco como um todo. Ele armazena uma lista de tabelas e possui métodos para adicionar/remover tabelas.
-Também implementei uma interface `Mantivel` (que explico abaixo), para que ele pudesse se "manter" — ou seja, gerar suas instruções SQL.
+Também irei implementar uma interface chamada `Mantivel` (que explico abaixo), para que ele pudesse se "manter" — ou seja, gerar suas instruções SQL.
 
 ### 2. Tabela
 
-Cada banco possui várias tabelas, então criei essa classe com uma lista de campos (`Campo`) e também de chaves estrangeiras (`ChaveEstrangeira`).
+Cada banco possui várias tabelas, então criarei uma classe com uma lista de campos (`Campo`) e também de chaves estrangeiras (`ChaveEstrangeira`).
 Aqui também implementei a interface `Mantivel`.
 
 ### 3. Campo
