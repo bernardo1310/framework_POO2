@@ -2,58 +2,81 @@
 
 ## Sobre o projeto
 
-Esse é um projeto da disciplina de POO 2, trabalho sobre Frameworks. A ideia era construir algo que me permitisse **definir tabelas, campos e relacionamentos no código**, 
-e depois gerar automaticamente os scripts SQL prontos para criar tudo no banco real.
-Eu quis automatizar o processo que normalmente seria feito escrevendo SQL "na mão", pensando em conceitos importantes de orientação a objetos, como encapsulamento, composição e uso de interfaces.
+Esse é um projeto da disciplina de POO 2, trabalho sobre Frameworks. A ideia era construir algo que me permitisse **definir tabelas, campos e relacionamentos no código**,  
+e depois gerar automaticamente os scripts SQL prontos para criar tudo no banco real.  
+Eu quis automatizar o processo que normalmente seria feito escrevendo SQL "na mão", pensando em conceitos importantes de orientação a objetos,  
+como encapsulamento, composição e uso de interfaces.
 
-## CO planejamento
+---
 
-Comecei pensando nos principais elementos de um banco de dados:
+## Como funciona o projeto
 
-- O banco em si
-- As tabelas
-- Os campos (colunas)
-- As chaves primárias e estrangeiras
+1. **Estrutura básica**  
+   O projeto tem classes para representar o banco de dados, tabelas, campos e chaves estrangeiras, além de uma interface para operações de manutenção.
 
-Com isso, criei as seguintes classes no PlantUML:
+2. **Geração automática de scripts SQL**  
+   O sistema gera automaticamente os scripts SQL para criar bancos de dados e tabelas, incluindo chaves primárias e estrangeiras, com base nas informações das classes.
+
+3. **Configuração de conexão**  
+   As configurações de conexão com o MySQL são feitas através de classes específicas, permitindo definir host, porta, usuário, senha e nome do banco.
+
+4. **Execução dos scripts**  
+   Um componente executa os scripts SQL gerados no banco real usando JDBC, facilitando a criação automática das estruturas no banco.
+
+5. **Exemplo prático no Main**  
+   A classe `Main` demonstra como montar os bancos, criar as tabelas com suas relações, gerar os scripts e executar no MySQL.
+
+6. **Diagrama de classes**  
+   O projeto possui um diagrama de classes organizado que mostra as relações entre as classes, usando ligações padrão de associação, composição e herança para facilitar o entendimento.
+
+---
+
+## Planejamento das classes principais
 
 ### 1. BancoDados
 
-Foi a primeira classe que fiz. Representa o banco como um todo. Ele armazena uma lista de tabelas e possui métodos para adicionar/remover tabelas.
-Também irei implementar uma interface chamada `Mantivel` (que explico abaixo), para que ele pudesse se "manter" — ou seja, gerar suas instruções SQL.
+Representa o banco como um todo. Armazena uma lista de tabelas e possui métodos para adicionar/remover tabelas.  
+Implementa a interface `Mantivel` para gerar suas instruções SQL.
+
+---
 
 ### 2. Tabela
 
-Cada banco possui várias tabelas, então criarei uma classe com uma lista de campos (`Campo`) e também de chaves estrangeiras (`ChaveEstrangeira`).
-Aqui também implementei a interface `Mantivel`.
+Representa uma tabela do banco. Possui listas de campos (`Campo`) e de chaves estrangeiras (`ChaveEstrangeira`).  
+Também implementa a interface `Mantivel`.
+
+---
 
 ### 3. Campo
 
-Essa representa uma coluna dentro da tabela. Possui os atributos nome, tipo, se é chave primária e se é nulo.
-Achei importante deixar bem flexível.
+Representa uma coluna da tabela. Contém atributos como nome, tipo, se é chave primária e se aceita valor nulo.
+
+---
 
 ### 4. ChaveEstrangeira
 
-Fiz essa classe para representar o relacionamento entre tabelas, conectando um campo de uma tabela a outro campo de uma tabela diferente.
-Isso ajudou bastante a simular relacionamentos reais entre entidades.
+Representa o relacionamento entre tabelas, conectando um campo de uma tabela a um campo de outra tabela, simulando relacionamentos reais.
+
+---
 
 ### 5. GeradorDeScript
 
-Essa classe é a "geradora de SQL". Ela pega os dados modelados nas classes acima e monta os comandos SQL para criação do banco e das tabelas. 
-Tentei deixar o código bem limpo e reutilizável.
+Classe responsável por gerar o código SQL a partir dos dados modelados nas classes, criando comandos para bancos e tabelas.
+
+---
 
 ### 6. ExecutorDeScript
 
-Depois de gerar o SQL, eu queria executar direto no banco real, então fiz essa classe com base na `ConfiguracaoConexao`. 
-Ela recebe o script e roda no banco usando JDBC.
+Executa os scripts SQL no banco real, usando as configurações definidas em `ConfiguracaoConexao` e JDBC.
+
+---
 
 ### 7. ConfiguracaoConexao
 
-Aqui eu só centralizei os dados de conexão: host, porta, usuário e senha. Isso deixou o código mais modular e seguro.
+Centraliza os dados da conexão ao banco: host, porta, usuário, senha e nome do banco.
+
+---
 
 ### 8. Interface Mantivel
 
-Essa interface surgiu para padronizar o método `manter()`, que todas as classes (BancoDados, Tabela, Campo) devem implementar.
-Ela é usada como ponto de entrada para qualquer tipo de manutenção (geração de script ou atualização futura).
-
-
+Padroniza o método `manter()`, implementado por `BancoDados`, `Tabela` e `Campo`, para facilitar operações de manutenção (como geração e execução de scripts).
